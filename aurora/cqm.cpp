@@ -5,35 +5,31 @@ using namespace std;
 int main(){
     ios::sync_with_stdio(false);
 
-    int t,n,p;
-    cin>>t;
-    while(t--){
-        cin>>p>>n;
-
-        int psq[200]={0};
-        psq[0]=1;
-        psq[1]=p;
-        int lim = sqrt(n)+2;
-        for(int i=2;i<=lim ;i++){
-                psq[i]= (psq[i-1]*p) % mod ;
-        }
-
-        int tmp = n;
-        int bit[1000]={0};
-        int l = 0;
-        while(tmp>0){
-            bit[l]= tmp%2;
-            tmp=tmp/2;
-            l+=1;
-        }
-
-        int ans =0;
-        for(int i=0,j=0;i<l;i++,j++){
-            if(bit[i]==1)ans=(psq[j]+ans)%mod;
-        }
-        cout<<ans<<endl;
-
+    vector<int> five;
+    int temp = 0;
+    for(int i=0; temp<5000050 ; i++)
+    {
+        temp+=5;
+        five.push_back(temp);
     }
+
+    long long n,m,l=0,r=0, ans=0;
+
+    cin>>n>>m;
+//cout<<five[500000]<<endl;
+    for(int i=1;i<=n;i++)
+    {
+        r = lower_bound(five.begin(), five.begin()+five.size(), m+i)-five.begin() ;
+        if(five[r] > m+i)
+            r--;
+
+        l=upper_bound(five.begin(), five.begin()+five.size(), i)-five.begin() ;
+        //if(five[l] == i)
+          //  l++;
+        if(r>=l)
+        ans += r-l+1;
+    }
+    cout<<ans;
 
     return 0;
 }
